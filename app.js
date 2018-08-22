@@ -4,13 +4,16 @@ const app = express()
 
 const Datastore = require('@google-cloud/datastore');
 const ds = Datastore({
- projectId: "building-apps-gcp-214015"
+ projectId: "building-apps-gcp-214015" // Replace with your project id
 })
 
+// Datastore "table name"
 const kind = 'Fortune'
 
+// Construct GQL Query, doesnt run it yet
 const q = ds.createQuery([kind]).select(["Text"])
 
+// "Cache" of fortunes
 var fortunes = []
 
 app.get('/', (req, res) => {
@@ -21,6 +24,7 @@ app.get("/fortune", (req, res) => {
 
 	if (fortunes.length === 0) {
 
+		// Entities contains results from the query
 		ds.runQuery(q, (err, entities, nextQuery) => {
 		
 			entities.forEach(ent => {
