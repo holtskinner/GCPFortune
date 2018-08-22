@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googlepis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <title>App Building with GCP</title>
+
+    <style>
+      #cookie {
+        width: 35%;
+        height: auto;
+      }
+
+
+	@-webkit-keyframes rotating {
+	    from {
+	        transform: rotate(0deg);
+	    }
+	    to {
+	        transform: rotate(360deg);
+	    }
+	}
+	
+	.rotating {
+	    -webkit-animation: rotating 2s linear infinite;
+	}
+    </style>
+
+  </head>
+  <body>
+
+	  <nav>
+	   <div class="teal nav-wrapper">
+	     <a href="index.html" class="brand-logo center">App Dev with GCP</a>
+	   </div>
+	 </nav>
+
+	 <main>
+	   <div class="container center-align">
+	     <img id="cookie" class="rotating" src="https://storage.googleapis.com/building-apps-gcp-214015-media/cookie.png" alt="Cookie"></img>
+	   </div>
+	  <div class="container center-align">
+	    <h5 id="fortune" class="header col s12 light">Click the cookie for a fortune!</h5>
+	  </div>
+	 </main>
+  </body>
+
+  <script>
+
+	/*eslint-disable semi */
+	const ajax = (url, callback) => {
+	    var x = new XMLHttpRequest();
+	    x.open("GET", url, true)
+	    x.onreadystatechange = () => {
+	        if (x.readyState === 4 && x.status === 200) {
+	            var text = x.responseText
+	            if (callback !== null) {
+	                callback(text)
+	            }
+	        }
+	    };
+	    x.send(null);
+	};
+	
+	const f = document.getElementById("fortune")
+
+	document.getElementById("cookie").onclick = () => {
+		ajax("/fortune", (fortune) => {
+			f.innerHTML = fortune
+		})
+	}
+
+  </script>
+
+</html>
